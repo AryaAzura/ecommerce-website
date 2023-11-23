@@ -21,8 +21,10 @@ if(isset($_POST['order'])){
    $email = filter_var($email, FILTER_SANITIZE_STRING);
    $method = $_POST['method'];
    $method = filter_var($method, FILTER_SANITIZE_STRING);
-   $address = 'flat no. '. $_POST['flat'] .', '. $_POST['street'] .', '. $_POST['city'] .', '. $_POST['state'] .', '. $_POST['country'] .' - '. $_POST['pin_code'];
+   $address = $_POST['street'] .', '. $_POST['city'] .', '. $_POST['state'] .', '. $_POST['country'] .' - '. $_POST['pin_code'];
    $address = filter_var($address, FILTER_SANITIZE_STRING);
+   $size = $_POST['size'];
+   $size = filter_var($size, FILTER_SANITIZE_STRING); 
    $total_products = $_POST['total_products'];
    $total_price = $_POST['total_price'];
 
@@ -31,8 +33,8 @@ if(isset($_POST['order'])){
 
    if($check_cart->rowCount() > 0){
 
-      $insert_order = $conn->prepare("INSERT INTO `orders`(user_id, name, number, email, method, address, total_products, total_price) VALUES(?,?,?,?,?,?,?,?)");
-      $insert_order->execute([$user_id, $name, $number, $email, $method, $address, $total_products, $total_price]);
+      $insert_order = $conn->prepare("INSERT INTO `orders`(user_id, name, number, email, method, address, total_products, size, total_price) VALUES(?,?,?,?,?,?,?,?,?)");
+      $insert_order->execute([$user_id, $name, $number, $email, $method, $address, $total_products, $size, $total_price]);
 
       $delete_cart = $conn->prepare("DELETE FROM `cart` WHERE user_id = ?");
       $delete_cart->execute([$user_id]);
@@ -83,7 +85,7 @@ if(isset($_POST['order'])){
                $total_products = implode($cart_items);
                $grand_total += ($fetch_cart['price'] * $fetch_cart['quantity']);
       ?>
-         <p> <?= $fetch_cart['name']; ?> <span>(<?= '$'.$fetch_cart['price'].'/- x '. $fetch_cart['quantity']; ?>)</span> </p>
+         <p> <?= $fetch_cart['name']; ?> <span>(<?= 'IDR'.$fetch_cart['price'].'/- x '. $fetch_cart['quantity']; ?>)</span> </p>
       <?php
             }
          }else{
@@ -92,7 +94,7 @@ if(isset($_POST['order'])){
       ?>
          <input type="hidden" name="total_products" value="<?= $total_products; ?>">
          <input type="hidden" name="total_price" value="<?= $grand_total; ?>" value="">
-         <div class="grand-total">grand total : <span>$<?= $grand_total; ?>/-</span></div>
+         <div class="grand-total">grand total : <span>IDR<?= $grand_total; ?>/-</span></div>
       </div>
 
       <h3>place your orders</h3>
@@ -104,7 +106,7 @@ if(isset($_POST['order'])){
          </div>
          <div class="inputBox">
             <span>your number :</span>
-            <input type="number" name="number" placeholder="enter your number" class="box" min="0" max="9999999999" onkeypress="if(this.value.length == 10) return false;" required>
+            <input type="number" name="number" placeholder="enter your number" class="box" min="0" max="999999999999" onkeypress="if(this.value.length == 12) return false;" required>
          </div>
          <div class="inputBox">
             <span>your email :</span>
@@ -120,28 +122,38 @@ if(isset($_POST['order'])){
             </select>
          </div>
          <div class="inputBox">
-            <span>address line 01 :</span>
-            <input type="text" name="flat" placeholder="e.g. flat number" class="box" maxlength="50" required>
+            <span>size number :</span>
+            <select name="size" class="box" required>
+               <option value="38">38</option>
+               <option value="39">39</option>
+               <option value="40">40</option>
+               <option value="41">41</option>
+            </select>
          </div>
          <div class="inputBox">
-            <span>address line 02 :</span>
-            <input type="text" name="street" placeholder="e.g. street name" class="box" maxlength="50" required>
+            <span>adress line :</span>
+            <input type="text" name="street" placeholder="e.g. JL. RS. Fatmawati" class="box" maxlength="75" required>
          </div>
          <div class="inputBox">
             <span>city :</span>
-            <input type="text" name="city" placeholder="e.g. mumbai" class="box" maxlength="50" required>
+            <input type="text" name="city" placeholder="e.g. Jakarta" class="box" maxlength="50" required>
          </div>
          <div class="inputBox">
             <span>state :</span>
-            <input type="text" name="state" placeholder="e.g. maharashtra" class="box" maxlength="50" required>
+            <input type="text" name="state" placeholder="e.g. DKI Jakarta" class="box" maxlength="50" required>
          </div>
          <div class="inputBox">
             <span>country :</span>
-            <input type="text" name="country" placeholder="e.g. India" class="box" maxlength="50" required>
+            <select name="country" class="box" required>
+               <option value="Indonesia">Indonesia</option>
+               <option value="Singapore">Singapore</option>
+               <option value="Malaysia">Malaysia</option>
+               <option value="Australia">Australia</option>
+            </select>
          </div>
          <div class="inputBox">
             <span>pin code :</span>
-            <input type="number" min="0" name="pin_code" placeholder="e.g. 123456" min="0" max="999999" onkeypress="if(this.value.length == 6) return false;" class="box" required>
+            <input type="number" min="0" name="pin_code" placeholder="e.g. 12430" min="0" max="999999" onkeypress="if(this.value.length == 6) return false;" class="box" required>
          </div>
       </div>
 
@@ -150,8 +162,6 @@ if(isset($_POST['order'])){
    </form>
 
 </section>
-
-
 
 
 

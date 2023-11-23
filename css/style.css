@@ -233,7 +233,7 @@ section{
 }
 
 .home-bg{
-   background:url(../images/bg1.png) no-repeat;
+   background:url(images/bg1.png) no-repeat;
    background-size: cover;
    background-position: center;
 }

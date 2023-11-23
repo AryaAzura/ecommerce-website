@@ -65,7 +65,7 @@ if(isset($_POST['send'])){
       <h3>Contact</h3>
       <input type="text" name="name" placeholder="Name" required maxlength="20" class="box">
       <input type="email" name="email" placeholder="Email" required maxlength="50" class="box">
-      <input type="number" name="number" min="0" max="9999999999" placeholder="Number Phone" required onkeypress="if(this.value.length == 12) return false;" class="box">
+      <input type="number" name="number" min="0" max="999999999999" placeholder="Number Phone" required onkeypress="if(this.value.length == 12) return false;" class="box">
       <textarea name="msg" class="box" placeholder="Message" cols="30" rows="10"></textarea>
       <input type="submit" value="send message" name="send" class="btn">
    </form>
