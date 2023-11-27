@@ -48,18 +48,8 @@ include 'components/wishlist_cart.php';
             <img src="images/home-img-7.png" alt="">
          </div>
          <div class="content">
-            <h3>NH X COMPASS . VELOCITY </h3>
-            <a href="shop.php" class="btn">shop now</a>
-         </div>
-      </div>
-
-      <div class="swiper-slide slide">
-         <div class="image">
-            <img src="images/home-img-5.png" alt="">
-         </div>
-         <div class="content">
-            <h3>COMPASS PROTO RUMAH TAMPUNG 2.0</h3>
-            <a href="shop.php" class="btn">shop now</a>
+            <h3>NH X COMPASS . VELOCITY LIMITED EDITION</h3>
+            <a href="shop.php" class="btn">go to catalog</a>
          </div>
       </div>
 
@@ -69,7 +59,17 @@ include 'components/wishlist_cart.php';
          </div>
          <div class="content">
             <h3>COMPASS PROTO 2</h3>
-            <a href="shop.php" class="btn">shop now</a>
+            <a href="shop.php" class="btn">go to catalog</a>
+         </div>
+      </div>
+
+      <div class="swiper-slide slide">
+         <div class="image">
+            <img src="images/velocityby1.png" alt="">
+         </div>
+         <div class="content">
+            <h3> COMPASS RETROGRADE VELOCITY</h3>
+            <a href="shop.php" class="btn">go to catalog</a>
          </div>
       </div>
 
@@ -82,49 +82,6 @@ include 'components/wishlist_cart.php';
 </section>
 
 </div>
-
-<section class="home-products">
-
-   <h1 class="heading">Recommendation</h1>
-
-   <div class="swiper products-slider">
-
-   <div class="swiper-wrapper">
-
-   <?php
-     $select_products = $conn->prepare("SELECT * FROM `products` LIMIT 2"); 
-     $select_products->execute();
-     if($select_products->rowCount() > 0){
-      while($fetch_product = $select_products->fetch(PDO::FETCH_ASSOC)){
-   ?>
-   <form action="" method="post" class="swiper-slide slide">
-      <input type="hidden" name="pid" value="<?= $fetch_product['id']; ?>">
-      <input type="hidden" name="name" value="<?= $fetch_product['name']; ?>">
-      <input type="hidden" name="price" value="<?= $fetch_product['price']; ?>">
-      <input type="hidden" name="image" value="<?= $fetch_product['image_01']; ?>">
-      <button class="fas fa-heart" type="submit" name="add_to_wishlist"></button>
-      <a href="quick_view.php?pid=<?= $fetch_product['id']; ?>" class="fas fa-eye"></a>
-      <img src="uploaded_img/<?= $fetch_product['image_01']; ?>" alt="">
-      <div class="name"><?= $fetch_product['name']; ?></div>
-      <div class="flex">
-         <div class="price"><span>IDR</span><?= $fetch_product['price']; ?><span>/-</span></div>
-         <input type="number" name="qty" class="qty" min="1" max="99" onkeypress="if(this.value.length == 2) return false;" value="1">
-      </div>
-      <input type="submit" value="add to cart" class="btn" name="add_to_cart">
-   </form>
-   <?php
-      }
-   }else{
-      echo '<p class="empty">no products added yet!</p>';
-   }
-   ?>
-
-   </div>
-
-   <div class="swiper-pagination"></div>
-
-   </div>
-
 </section>
 
 <section class="home-products">

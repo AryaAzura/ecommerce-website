@@ -38,7 +38,7 @@ if(isset($_SESSION['user_id'])){
    <div class="row">
 
       <div class="image">
-         <img src="images/about-img.jpg" alt="">
+         <img src="images/logocompass.jpg" alt="">
       </div>
 
       <div class="content">
