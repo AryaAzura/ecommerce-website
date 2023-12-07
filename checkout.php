@@ -23,8 +23,8 @@ if(isset($_POST['order'])){
    $method = filter_var($method, FILTER_SANITIZE_STRING);
    $address = $_POST['street'] .', '. $_POST['city'] .', '. $_POST['state'] .', '. $_POST['country'] .' - '. $_POST['pin_code'];
    $address = filter_var($address, FILTER_SANITIZE_STRING);
-   $size = $_POST['size'];
-   $size = filter_var($size, FILTER_SANITIZE_STRING); 
+   $note = $_POST['note'];
+   $note = filter_var($note, FILTER_SANITIZE_STRING); 
    $total_products = $_POST['total_products'];
    $total_price = $_POST['total_price'];
 
@@ -33,8 +33,8 @@ if(isset($_POST['order'])){
 
    if($check_cart->rowCount() > 0){
 
-      $insert_order = $conn->prepare("INSERT INTO `orders`(user_id, name, number, email, method, address, total_products, size, total_price) VALUES(?,?,?,?,?,?,?,?,?)");
-      $insert_order->execute([$user_id, $name, $number, $email, $method, $address, $total_products, $size, $total_price]);
+      $insert_order = $conn->prepare("INSERT INTO `orders`(user_id, name, number, email, method, address, total_products, note, total_price) VALUES(?,?,?,?,?,?,?,?,?)");
+      $insert_order->execute([$user_id, $name, $number, $email, $method, $address, $total_products, $note, $total_price]);
 
       $delete_cart = $conn->prepare("DELETE FROM `cart` WHERE user_id = ?");
       $delete_cart->execute([$user_id]);
@@ -122,12 +122,8 @@ if(isset($_POST['order'])){
             </select>
          </div>
          <div class="inputBox">
-            <span>size number :</span>
-            <select name="size" class="box" required>
-               <option value="38">38</option>
-               <option value="39">39</option>
-               <option value="40">40</option>
-               <option value="41">41</option>
+            <span>note :</span>
+            <input type="text" name="note" placeholder="e.g. Retrograde Hi Creme Spinach - 41" class="box" maxlength="155" required>
             </select>
          </div>
          <div class="inputBox">
